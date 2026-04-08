@@ -10,6 +10,7 @@ PLAYER_Y = GAME_WIDTH / 2
 
 PLAYER_HEIGHT = 42
 PLAYER_WIDTH = 48
+PLAYER_DISTANCE = 5
 
 # image
 background_image = pygame.image.load(os.path.join("images", "background.png"))
@@ -56,13 +57,23 @@ while True:
         #         player.x -= 5 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP] or keys[pygame.K_w]:
-            player.y -= 5
+            player.y = max(player.y - PLAYER_DISTANCE, 0)
+            # player.y -= PLAYER_DISTANCE
+            # if player.y < 0:
+            #     player.y = 0
+                # player.y += PLAYER_DISTANCE 
+
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-            player.y += 5
+            player.y = min(player.y + PLAYER_DISTANCE, GAME_HEIGHT - player.height)
+            # player.y += PLAYER_DISTANCE
+            # if player.y + player.height > GAME_HEIGHT:
+            #     player.y = GAME_HEIGHT - player.height
+
+
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-            player.x += 5
+            player.x += PLAYER_DISTANCE
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-            player.x -= 5
+            player.x -= PLAYER_DISTANCE
 
         draw()
     pygame.display.update()
