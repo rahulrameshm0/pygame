@@ -25,12 +25,14 @@ clock = pygame.time.Clock()
 
 class Player(pygame.Rect):
     def __init__(self):
-        pygame.Rect(PLAYER_X, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT)
+        super().__init__(PLAYER_X, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.image = player_image_right
 
 # left(x), right(y), width, height
 # player = pygame.Rect(150, 150, 50, 50)
 player = Player()
+print(player)
+
 
          
 
@@ -46,7 +48,26 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        # if event.type == pygame.KEYDOWN:
+       
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
+            player.y = max(player.y - PLAYER_DISTANCE, 0)
+
+        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+            player.y = min(player.y + PLAYER_DISTANCE, GAME_HEIGHT - player.height)
+
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+            player.x = min(player.x + PLAYER_DISTANCE, GAME_WIDTH + player.width)
+
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+            player.x = max(player.x - PLAYER_DISTANCE, 0)
+
+        draw()
+    pygame.display.update()
+    clock.tick(60) #60 frams per second (fps)
+
+
+ # if event.type == pygame.KEYDOWN:
         #     if event.key in (pygame.K_UP, pygame.K_w):
         #         player.y -= 5
         #     if event.key in (pygame.K_DOWN , pygame.K_s):
@@ -55,27 +76,13 @@ while True:
         #         player.x += 5
         #     if event.key in (pygame.K_LEFT, pygame.K_a):
         #         player.x -= 5 
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
-            player.y = max(player.y - PLAYER_DISTANCE, 0)
-            # player.y -= PLAYER_DISTANCE
+
+
+   # player.y -= PLAYER_DISTANCE
             # if player.y < 0:
             #     player.y = 0
                 # player.y += PLAYER_DISTANCE 
 
-        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-            player.y = min(player.y + PLAYER_DISTANCE, GAME_HEIGHT - player.height)
-            # player.y += PLAYER_DISTANCE
+     # player.y += PLAYER_DISTANCE
             # if player.y + player.height > GAME_HEIGHT:
             #     player.y = GAME_HEIGHT - player.height
-
-
-        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-            player.x += PLAYER_DISTANCE
-        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-            player.x -= PLAYER_DISTANCE
-
-        draw()
-    pygame.display.update()
-    clock.tick(60) #60 frams per second (fps)
-
